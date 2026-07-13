@@ -34,7 +34,15 @@ fn main() {
     let tup: (char, u32, f32, bool, (i32, char)) = ('A', 54, 25.78, true, (-5, 'B'));
     println!("{}", tup.1);
     let (tup_char, unsigned32, floating32, boolean, nested_tupple) = tup;
+    let tup_char = tup.0;
     println!("{tup_char}, {unsigned32}, {floating32}, {boolean}");
     let (signed_int, character) = nested_tupple;
     println!("{signed_int}, {character}");
+
+    let arr = ["Tom", "Jerry", "Harry"];
+    let idx_1 = arr[1];
+    let arr_2: [i32;3] = [44, 34, -23];
+    let arr_2_idx_2 = arr_2[2];
+
+    println!("{idx_1}, {arr_2_idx_2}");
 }
