@@ -1,5 +1,3 @@
 Me learning rust
 
-
-### tips-
-- `find -name .git -prune -exec rm -irf '{}' +` to find and rm from everywhere within current dir
+See all projects am making while learning it 3 : https://github.com/sakg-dev/rust-projects
