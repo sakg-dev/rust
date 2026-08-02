@@ -1,0 +1,25 @@
+fn main() {
+    let string = String::from("thousand years zellij rust bedwar lol");
+    // let first_word = bad_find_first_word(&string);
+    first_word_without_slice(&mut string); 
+}
+
+fn first_word_without_slice(s: &String) {
+    fn get_len_of_first_space(s: &String) -> usize {
+        let bytes = s.as_bytes();
+        for (idx, &item) in bytes.iter().enumerate() {
+            if item == b' ' {
+                println!("Space found at {}", idx);
+                return idx;
+            }
+        }
+        return s.len();
+    }
+    let f = get_len_of_first_space(s);
+
+}
+
+fn bad_find_first_word(s: &String) -> String {
+    s.split(" ").nth(0).expect("aaa").to_string()
+}
+
