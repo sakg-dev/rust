@@ -4,17 +4,49 @@ use std::io::Write;
 use rand::Rng;
 
 fn main(){
-    define_and_instantiate();
+    // define_and_instantiate();
+    example_and_dbg();
 }
 
-fn prompt(message: &str, var_ref: &mut String){
-    print!("{}", message);
-    io::stdout().flush().unwrap();
-    
-    io::stdin().read_line(var_ref).unwrap();
+fn example_and_dbg(){
+    #[derive(Debug)]
+    struct Rect{
+        width: u32,
+        height: u32
+    }
+
+    fn area(rect: Rect) -> u32{
+        rect.width * rect.height
+    }
+
+    let rect1 = Rect{
+        width: 15,
+        height: 11
+    };
+
+    // println!("{}", area(rect1))
+    // println!("{:?}", rect1)
+    // println!("{:#?}", rect1);
+    // let a = [1,2,3,4,5,6,7,8,9];
+    // println!("{:#?}", a)
+
+    let rect2 = Rect{
+        width: dbg!(3*4),
+        height: 15
+    };
+
+    dbg!(&rect2); // bcz it takes ownership but we dont wanna move ownership
+
 }
 
 fn define_and_instantiate(){
+    fn prompt(message: &str, var_ref: &mut String){
+        print!("{}", message);
+        io::stdout().flush().unwrap();
+        
+        io::stdin().read_line(var_ref).unwrap();
+    }
+
     struct Player{
         name: String,
         health: u32,
