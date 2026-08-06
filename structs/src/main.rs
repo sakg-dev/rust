@@ -5,7 +5,93 @@ use rand::Rng;
 
 fn main(){
     // define_and_instantiate();
-    example_and_dbg();
+    // example_and_dbg();
+    methods();
+}
+
+fn methods(){
+    struct Platforms {
+        windows: bool,
+        linux: bool,
+        mac: bool
+    }
+
+    impl Platforms {
+        fn gen_str(&self) -> String {
+            let mut oses = String::from("");
+            if self.windows{ oses.push_str("windows, ") }
+            if self.linux{ oses.push_str("linux, ") }
+            if self.mac{ oses.push_str("macs, ") }
+
+            // println!("'{}'", &oses[(oses.len()-2)..]); // shows ', '
+            oses = oses[..(oses.len()-2)].to_string();
+            return oses;
+        }
+    }
+
+    struct Game {
+        name: String,
+        dimension: u32,
+        platforms: Platforms,
+        downloads: u32, 
+        cost: f32
+    }
+
+    impl Game {
+        fn new(name:&str, dimension: u32, platforms: Platforms, downloads: u32, cost: f32) -> Self{
+            Game{
+                name:name.to_string(),
+                dimension,
+                platforms,
+                downloads,
+                cost
+            }
+        }
+
+        fn release(&self) {
+            println!("Yo, finally the waiting is over bcz {} has been finally released under the cost of just ${}, and its a {}d game, compatible for {}. Buy soon as {} ppl have already bought it!", self.name, self.cost, self.dimension, self.platforms.gen_str(), self.downloads)
+        }
+
+        fn compare(&self, other_game: &Game, mode: &str) {
+            if mode == "strong"{
+                println!("Jst believe me u tiny gamer, i have played way more games than u and u would love playing {} over {}", self.name, other_game.name);
+            } else{
+                println!("{} has {} players and costs {} whereas {} has {} players and costs {}", other_game.name, other_game.downloads, other_game.cost, self.name, self.downloads, self.cost);
+            }
+        }
+    }
+
+    // let portal_2 = Game{
+    //    name: String::from("Portal 2"),
+    //    dimension: 3,
+    //    platforms: Platforms {
+    //        windows: true,
+    //        linux: true,
+    //        mac: false
+    //    },
+    //    downloads: 1585543,
+    //    cost: 4.27
+    //};
+
+    //let portal_1 = Game {
+    //    name: String::from("Portal 1"),
+    //    dimension: 3,
+    //    platforms: Platforms {
+    //        windows: true,
+    //        linux: false,
+    //        mac: false
+    //    },
+    //    downloads: 985554,
+    //    cost: 3.25
+    // };
+
+
+    let portal_1 = Game::new("Portal 1", 3, Platforms{windows:true,linux:false,mac:false}, 985554, 3.25);
+    let portal_2 = Game::new("Portal 2", 3, Platforms{windows:true,linux:true,mac:false}, 1585543, 4.27);
+    
+    portal_1.release();
+    portal_2.release();
+    portal_2.compare(&portal_1, "strong");
 }
 
 fn example_and_dbg(){
