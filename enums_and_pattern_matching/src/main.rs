@@ -1,9 +1,78 @@
 fn main() {
     // define_enum();
     // option_enum();
-    match_case();
+    // match_case();
+    // if_let();
 }
 
+#[allow(dead_code, unused)]
+fn if_let(){
+    let max_score = Some(100u8);
+
+    // This works but why to write _ case when we js need to handle 1 case?
+    match max_score {
+        Some(max) => println!("Max Score is {}", max),
+        _ => ()
+    }
+
+    if let Some(max) = max_score{ // takes a pattern in left and expression in right seperated by =
+        println!("Max Score is {}", max);
+    }
+
+    let i = 5;
+    if let 5 = i{ // without binding
+        println!("Value is 5");
+    } else { // for all other cases, same as _
+        println!("Value is not 5");
+    }
+
+    // here now i cvr let else..........
+    // Using if let: it wrks but kind of less readability
+    fn login_log_1(username_opt: Option<String>) -> String{
+        if let Some(username) = username_opt {
+            // all operations
+            if username.len() <= 3 {
+                String::from("Username needs to be longer than 3 char")
+            } else {
+                String::from(format!("Welcome home {}!", username))
+            }
+        } else {
+            return String::from("No username profided wtf"); 
+        }
+    }
+    // here its more readable but not much common as if produces a value but else returns 
+    fn login_log_2(username_opt: Option<String>) -> String{
+        let username = if let Some(username) = username_opt {
+            // all operations
+             username
+        } else {
+            return String::from("No username profided wtf"); 
+        };
+
+        if username.len() <= 3 {
+            String::from("Username needs to be longer than 3 char")
+        } else {
+            String::from(format!("Welcome home {}!", username))
+        }
+    }
+    // this is let..else.. where we are defining what to do when its not what we want rather else(we can return from there) then we can handle our specific case
+    fn login_log(username_opt: Option<String>) -> String{
+        let Some(username) = username_opt else {
+            // println!("username: {}", username); // username is not available here
+            return String::from("No username profided wtf");
+        };
+        // all operations
+        if username.len() <= 3 {
+            String::from("Username needs to be longer than 3 char")
+        } else {
+            String::from(format!("Welcome home {}!", username))
+        }
+    }
+    println!("{}", login_log(None));
+    println!("{}", login_log(Some(String::from("sakg"))))
+}
+
+#[allow(dead_code, unused)]
 fn match_case(){
     let n = 5;
     match n{
@@ -42,7 +111,7 @@ fn match_case(){
     }
     let val = sqr(Some(4));
     let val2 = sqr(None);
-    println!("{}, {}", val.unwrap_or(0), val2.unwrap_or(0));
+    println!("{}, {}", val.unwrap_or(0), val2.unwrap_or(0)); // 16 0
 
     fn age_comment(age:u32) -> String {
         match age {
@@ -64,11 +133,15 @@ fn match_case(){
 
 #[allow(dead_code, unused)]
 fn option_enum(){
+    //enum Option<T>{
+    //    Some<T>,
+    //    None
+    //}
     let simple_int = 5;
     let strange_int1 = Some(5);
     let strange_int2:Option<u32> = None;
-    println!("{}", simple_int+strange_int1.unwrap_or(0));
-    println!("{}", simple_int+strange_int2.unwrap_or(0));
+    println!("{}", simple_int+strange_int1.unwrap_or(0)); // 10
+    println!("{}", simple_int+strange_int2.unwrap_or(0)); // 5
 }
 
 #[allow(dead_code, unused)]
