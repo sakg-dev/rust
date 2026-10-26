@@ -4,18 +4,20 @@
 //
 // }
 
-use crate::renderer as rd;
 pub mod renderer; // the pub keyword lets us use renderer externally, making the mod public doesn't make its contents public
+use std::{io, io::Write}; // use io and io::Write
+// use std::io::{self, Write}; // same like above, but uses self..
+// use std::*; // bring everything which is in std, here in scope.
 
 fn main() {
     println!("Hello, world!");
 
-    rd::print_smthing();
-    // rd::very_humble_task(); // can't do as it is private..
+    renderer::print_smthing();
+    // renderer::very_humble_task(); // can't do as it is private..
 
-    let renderer = rd::Renderer {
+    let renderer = renderer::Renderer {
         fps: 16,
-        quality: rd::Quality::Fine
+        quality: renderer::Quality::Fine
     };
     println!("{:?}", renderer);
 
@@ -37,6 +39,15 @@ mod smthing {
             super::out(); // super is for accessing parent path, js like ../
             super::super::root_out() // one super for going out of smthing_other, another for smthing -- nested parent like ../../
         }
+        fn private_fn(){
+
+        }
+        pub struct NewStruct{
+
+        }
+        pub enum NewEnum{
+            V1
+        }
     }
 }
 fn abt_path(){
@@ -48,6 +59,18 @@ fn abt_path(){
 
     crate::smthing::smthing_other::print_path_type("relative"); // relative path
 
+    pub use crate::smthing::smthing_other; // creating shortcut, now the mod smthing_other can be called like other vars in the current scope. | pub means we reexporting it for external program to call it instead of our inner long module path
+    use crate::smthing::smthing_other as smthing_other_other;
+    smthing_other::print_path_type("use shortcut with");
+    // smthing_other::private_fn(); // private fn, use respects that
+    // IDIOMATIC WAY TO USE 'use' in rust:
+    // for function: with parent as shown above
+    // for data types like enum or struct, full path like(except if they multiple var has same name so with parent..):
+    use smthing_other::{ NewStruct, NewEnum }; // importing multiple things from same path.
+    let s = NewStruct{};
+    let e = NewEnum::V1;
+
+    // pub use smthing_other;
     // all items are private to parent by default but childs can see everything of ancestor...
 }
 
